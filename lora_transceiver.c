@@ -732,6 +732,7 @@ int main (int argc, char *argv[]) {
                 else
                     break;
             }
+            printf("The buflen is %d \n", buflen);
             if (buflen > 0) {
                 if (verbose >= 1) {
                     printf("------------------\n");
