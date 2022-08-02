@@ -721,6 +721,7 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         while(poll(fds, 1, 0)) {
+            int i=0;
             memset(&message, 0, sizeof(message));
             buflen = 0;
             while (buflen < blocksize) {
@@ -745,6 +746,7 @@ int main (int argc, char *argv[]) {
                     delay(10);
                 }
             }
+            printf("******iter %d *******\n",i);
         }
         // radio init
         opmode(OPMODE_STANDBY);
