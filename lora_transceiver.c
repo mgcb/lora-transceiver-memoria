@@ -744,8 +744,10 @@ int main (int argc, char *argv[]) {
                     hexdump((byte *)message, buflen);
                 txlora((byte *)message, buflen);
                 while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
+                    printf("entro a while\n");
                     delay(10);
                 }
+                printf("Salgo de while\n");
             }
         }
 
