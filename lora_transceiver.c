@@ -746,6 +746,7 @@ int main (int argc, char *argv[]) {
                     delay(10);
                 }
             }
+            i++;
             printf("******iter %d *******\n",i);
         }
         // radio init
