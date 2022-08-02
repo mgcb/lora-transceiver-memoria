@@ -720,8 +720,9 @@ int main (int argc, char *argv[]) {
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
 
+        printf("number of messages %d \n",poll(fds, 1, 0));
+
         while(poll(fds, 1, 0)) {
-            int i=0;
             memset(&message, 0, sizeof(message));
             buflen = 0;
             while (buflen < blocksize) {
@@ -746,9 +747,10 @@ int main (int argc, char *argv[]) {
                     delay(10);
                 }
             }
-            i++;
-            printf("******iter %d *******\n",i);
         }
+
+        printf("Salgo del while de enviar mensajes");
+
         // radio init
         opmode(OPMODE_STANDBY);
         // reset the IRQ mapping after sending.
