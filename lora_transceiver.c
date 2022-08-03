@@ -770,6 +770,7 @@ int main (int argc, char *argv[]) {
                 printf("Received %i bytes.\n", buflen);
                 if (verbose > 1){
                     hexdump((byte *)message, buflen);
+                    printf("%s \n", message);
                     printf("The statement is %d \n", strcmp(message, "Melanie"));
                 }
             }
