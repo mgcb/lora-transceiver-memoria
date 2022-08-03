@@ -768,9 +768,10 @@ int main (int argc, char *argv[]) {
             if (buflen > 0 && verbose >= 1) {
                 printf("------------------\n");
                 printf("Received %i bytes.\n", buflen);
-                if (verbose > 1)
+                if (verbose > 1){
                     printf("The message is: %s \n", message);
                     hexdump((byte *)message, buflen);
+                }
             }
             written = 0;
             if (buflen >= 0) {
