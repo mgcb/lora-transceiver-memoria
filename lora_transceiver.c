@@ -723,7 +723,9 @@ int main (int argc, char *argv[]) {
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
 
-        printf("number of messages %d \n",poll(fds, 1, 0));
+        if (flag){
+            system("echo 'melanie' >/dev/shm/send_fifo");
+        }
 
         while(poll(fds, 1, 0)) {
             memset(&message, 0, sizeof(message));
@@ -772,8 +774,8 @@ int main (int argc, char *argv[]) {
                     hexdump((byte *)message, buflen);
                     printf("%s \n", message);
                     if(strcmp(message, "Melanie") == 0){
-                        sleep(5);
-                        system("echo 'melanie' >/dev/shm/send_fifo");
+                        int flag = 1;
+                        continue();
                     }
                 }
             }
