@@ -725,6 +725,7 @@ int main (int argc, char *argv[]) {
 
         while(poll(fds, 1, 0)) {
             memset(&message, 0, sizeof(message));
+            printf("me quedo en memset\n");
             buflen = 0;
             while (buflen < blocksize) {
                 retv = read(wfd, (void *)&message[buflen], 1);
@@ -734,6 +735,7 @@ int main (int argc, char *argv[]) {
                     continue;
                 else
                     break;
+                printf("me quedo en buflen < blocksize\n");
             }
             printf("The buflen is %d \n", buflen);
             if (buflen > 0) {
