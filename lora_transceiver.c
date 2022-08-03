@@ -176,6 +176,7 @@ const int SPI_DEVICE = 0;
 
 char message[8];
 bool sx1272 = true;
+int flag = 0;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
 
@@ -728,6 +729,7 @@ int main (int argc, char *argv[]) {
         }
 
         while(poll(fds, 1, 0)) {
+            flag = 0;
             memset(&message, 0, sizeof(message));
             buflen = 0;
             while (buflen < blocksize) {
@@ -774,7 +776,7 @@ int main (int argc, char *argv[]) {
                     hexdump((byte *)message, buflen);
                     printf("%s \n", message);
                     if(strcmp(message, "Melanie") == 0){
-                        int flag = 1;
+                        flag = 1;
                         continue();
                     }
                 }
