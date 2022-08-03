@@ -777,7 +777,7 @@ int main (int argc, char *argv[]) {
                     printf("%s \n", message);
                     if(strcmp(message, "Melanie") == 0){
                         flag = 1;
-                        continue();
+                        continue;
                     }
                 }
             }
