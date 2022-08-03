@@ -727,7 +727,6 @@ int main (int argc, char *argv[]) {
 
         while(poll(fds, 1, 0)) {
             memset(&message, 0, sizeof(message));
-            printf("me quedo en memset\n");
             buflen = 0;
             while (buflen < blocksize) {
                 retv = read(wfd, (void *)&message[buflen], 1);
@@ -738,7 +737,6 @@ int main (int argc, char *argv[]) {
                     continue;
                 else
                     break;
-                printf("me quedo en buflen < blocksize\n");
             }
             printf("The buflen is %d \n", buflen);
             if (buflen > 0) {
@@ -750,14 +748,10 @@ int main (int argc, char *argv[]) {
                     hexdump((byte *)message, buflen);
                 txlora((byte *)message, buflen);
                 while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
-                    printf("entro a while\n");
                     delay(10);
                 }
-                printf("Salgo de while\n");
             }
         }
-
-        printf("Salgo del while de enviar mensajes");
 
         // radio init
         opmode(OPMODE_STANDBY);
@@ -775,6 +769,7 @@ int main (int argc, char *argv[]) {
                 printf("------------------\n");
                 printf("Received %i bytes.\n", buflen);
                 if (verbose > 1)
+                    printf("The message is: %s \n", message);
                     hexdump((byte *)message, buflen);
             }
             written = 0;
