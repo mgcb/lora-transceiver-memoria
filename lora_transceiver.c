@@ -580,7 +580,7 @@ void load_config() {
         printf("blocksize antes ---> %d \n",atoi(conf_blocksize));
         if (blocksize > (int)sizeof(message))
             blocksize = sizeof(message - 1);
-            printf("blocksize despues ---> %d \n", sizeof(message - 1));
+        printf("blocksize despues ---> %d \n", sizeof(message - 1));
     }
     if (conf_bw != NULL) {
         if (strncasecmp(conf_bw, "BW7_81", strlen("BW7_81")) == 0) {
