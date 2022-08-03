@@ -700,6 +700,7 @@ int main (int argc, char *argv[]) {
     /* This program reads from lora and writes to the
        receive fifo. Clients read from this fifo.
     */
+    //O_RDWR modo read and write
     rfd = open_create_fifo(LORARECEIVE_FIFO, O_RDWR | O_NONBLOCK);
     wfd = open_create_fifo(LORASEND_FIFO, O_RDWR);
 
