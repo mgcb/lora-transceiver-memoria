@@ -174,7 +174,7 @@ typedef unsigned char byte;
 // The SPI device this board is using.
 const int SPI_DEVICE = 0;
 
-char message[256];
+char message[8];
 bool sx1272 = true;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
@@ -770,6 +770,7 @@ int main (int argc, char *argv[]) {
                 printf("Received %i bytes.\n", buflen);
                 if (verbose > 1){
                     hexdump((byte *)message, buflen);
+                    printf("The statement is %d \n", strcmp(message, "Melanie"));
                 }
             }
             written = 0;
