@@ -772,7 +772,7 @@ int main (int argc, char *argv[]) {
                     hexdump((byte *)message, buflen);
                     printf("%s \n", message);
                     if(strcmp(message, "Melanie") == 0){
-                        system("echo "melanie" >/dev/shm/send_fifo");
+                        system("echo 'melanie' >/dev/shm/send_fifo");
                     }
                 }
             }
