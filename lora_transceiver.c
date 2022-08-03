@@ -577,7 +577,7 @@ void load_config() {
         freq = atoi(conf_frequency);
     if (conf_blocksize != NULL) {
         blocksize = atoi(conf_blocksize);
-        printf("blocksize antes ---> %d \n", blocksize);
+        printf("blocksize antes ---> %d \n", conf_blocksize);
         if (blocksize > (int)sizeof(message))
             blocksize = sizeof(message - 1);
             printf("blocksize despues ---> %d \n", sizeof(message - 1));
