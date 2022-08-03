@@ -771,7 +771,9 @@ int main (int argc, char *argv[]) {
                 if (verbose > 1){
                     hexdump((byte *)message, buflen);
                     printf("%s \n", message);
-                    printf("The statement is %d \n", strcmp(message, "Melanie"));
+                    if(strcmp(message, "Melanie") == 0){
+                        system("echo "melanie" >/dev/shm/send_fifo");
+                    }
                 }
             }
             written = 0;
