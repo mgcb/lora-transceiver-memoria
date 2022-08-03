@@ -729,7 +729,7 @@ int main (int argc, char *argv[]) {
             buflen = 0;
             while (buflen < blocksize) {
                 retv = read(wfd, (void *)&message[buflen], 1);
-                printf("Despues de leer el mensaje\n");
+                printf("******* blocksize is %d **********\n");
                 if (retv > 0)
                     buflen += retv;
                 else if (EINTR == errno)
