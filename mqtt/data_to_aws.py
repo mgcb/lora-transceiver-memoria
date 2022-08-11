@@ -23,6 +23,8 @@ def loop():
             topic="RealTimeDataTrasfer/Message",
             QoS=1,
             payload='{"Message":"'+message+'"}')
+        
+        break
 
 if __name__ == '__main__':
     try:
