@@ -174,7 +174,7 @@ typedef unsigned char byte;
 // The SPI device this board is using.
 const int SPI_DEVICE = 0;
 
-char message[8];
+char message[15];
 bool sx1272 = true;
 int flag = 0;
 byte receivedbytes;
