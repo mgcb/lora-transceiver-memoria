@@ -316,10 +316,20 @@ void SetupLoRa()
     opmode(OPMODE_SLEEP);
     // set frequency
     uint64_t frf = ((uint64_t)freq << 19) / 32000000;
+    printf("Chip frequency is: %d", frf);
+    //frf is a 24-bit operator which defines the operation frquency of the chip
+    //most significant bit
+    printf("MSB for chip frquency \n");
     writeReg(REG_FRF_MSB, (uint8_t)(frf>>16) );
+    //
+    printf("MID for chip frquency \n");
     writeReg(REG_FRF_MID, (uint8_t)(frf>> 8) );
+    //least significant bit
+    printf("LSB for chip frquency \n");
     writeReg(REG_FRF_LSB, (uint8_t)(frf>> 0) );
 
+    //Sync word is not used in this case because we don't use LoRaWAN
+    printf("Sync word for LoRaWAN \n");
     writeReg(REG_SYNC_WORD, 0x34); // LoRaWAN public sync word
 
     if (sx1272) {
@@ -330,25 +340,43 @@ void SetupLoRa()
         }
         writeReg(REG_MODEM_CONFIG2,(sf<<4) | 0x04);
     } else {
+        //Modem configuration for Sx1276
         if (sf == SF11 || sf == SF12) {
             writeReg(REG_MODEM_CONFIG3,0x0C);
         } else {
+            printf("modem configuration for SF7 \n");
             writeReg(REG_MODEM_CONFIG3,0x04);
         }
         // Speed and CR settings.
+        printf("bw and cr settings \n");
         writeReg(REG_MODEM_CONFIG, bw | cr);
         // Configure crc checks.
+        printf("crc settings\n");
         writeReg(REG_MODEM_CONFIG2, sf<<4 | crc);
     }
     if (sf == SF10 || sf == SF11 || sf == SF12) {
         writeReg(REG_SYMB_TIMEOUT_LSB,0x05);
     } else {
+        //symbol for timeout (LSB)
+        printf("REG_SYMB_TIMEOUT_LSB \n");
         writeReg(REG_SYMB_TIMEOUT_LSB,0x08);
     }
+
+    //max payload length is 128
+    printf("Max payload length \n");
     writeReg(REG_MAX_PAYLOAD_LENGTH,0x80);
+    printf("Payload length \n");
     writeReg(REG_PAYLOAD_LENGTH,PAYLOAD_LENGTH);
+    //This model use FREQUENCY HOPPING SPREAD SPECTRUM (FHSS)
+    //Symbol periods between frequency hops.
+    printf("Frequency hops \n");
     writeReg(REG_HOP_PERIOD,0xFF);
+    //REG_FIFO_ADDR_PTR is a dynamic pointer that indicates precisely where the Lora modem received data has been written up to
+    printf("REG_FIFO_ADDR_PTR \n");
+    //sets the FIFO pointer to the location of the last packet received in the FIFO
     writeReg(REG_FIFO_ADDR_PTR, readReg(REG_FIFO_RX_BASE_AD));
+    //Low Noise Amplifier, set to LNA_Max_Gain which is 35 (seteado a 12 o 36db (?))
+    printf("LNA \n");
     writeReg(REG_LNA, LNA_MAX_GAIN);
 }
 
@@ -366,7 +394,9 @@ boolean receive(char *payload) {
     } else {
 
         byte currentAddr = readReg(REG_FIFO_RX_CURRENT_ADDR);
+        printf("CURRENT ADDR OF SENDER: %i\n");
         byte receivedCount = readReg(REG_RX_NB_BYTES);
+        printf("receive COUNT : %i\n", receivedCount)
         receivedbytes = receivedCount;
         if (verbose == 2) {
             printf("receive : %i bytes received.\n", receivedbytes);
@@ -723,10 +753,6 @@ int main (int argc, char *argv[]) {
         opmode(OPMODE_STANDBY);
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
-
-        if (flag){
-            system("echo 'melanie' >/dev/shm/send_fifo");
-        }
 
         while(poll(fds, 1, 0)) {
             flag = 0;
