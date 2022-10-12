@@ -399,7 +399,7 @@ boolean receive(char *payload) {
         byte currentAddr = readReg(REG_FIFO_RX_CURRENT_ADDR);
         printf("CURRENT ADDR OF SENDER: %i\n", currentAddr);
         byte receivedCount = readReg(REG_RX_NB_BYTES);
-        printf("receive COUNT : %i\n", receivedCount)
+        printf("receive COUNT : %i\n", receivedCount);
         receivedbytes = receivedCount;
         if (verbose == 2) {
             printf("receive : %i bytes received.\n", receivedbytes);
