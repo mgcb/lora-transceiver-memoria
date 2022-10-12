@@ -318,7 +318,7 @@ void SetupLoRa()
     opmode(OPMODE_SLEEP);
     // set frequency
     uint64_t frf = ((uint64_t)freq << 19) / 32000000;
-    printf("Chip frequency is: %d", frf);
+    //printf("Chip frequency is: %d", frf);
     //frf is a 24-bit operator which defines the operation frquency of the chip
     //most significant bit
     printf("MSB for chip frquency \n");
