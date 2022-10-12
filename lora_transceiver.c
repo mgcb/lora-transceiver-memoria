@@ -37,7 +37,7 @@
 /* LORARECEIVE_FIFO : received from other nodes.*/
 #define LORARECEIVE_FIFO "/dev/shm/receive_fifo"
 /* User id that has access to the FIFO */
-#define FIFO_OWNER 33
+#define FIFO_OWNER 1000
 
 // #############################################
 // #############################################
@@ -277,6 +277,7 @@ static void opmodeLora() {
     if (sx1272 == false)
         u |= 0x8;   // TBD: sx1276 high freq
     if (lora_debug)
+        //activating LoRa mode 0x80 is 100000000
         printf("opmodeLora %x -> %x\n", OPMODE_LORA, REG_OPMODE);
     writeReg(REG_OPMODE, u);
 }
@@ -312,7 +313,8 @@ void SetupLoRa()
             exit(1);
         }
     }
-
+    
+    //Low power mode
     opmode(OPMODE_SLEEP);
     // set frequency
     uint64_t frf = ((uint64_t)freq << 19) / 32000000;
@@ -382,6 +384,7 @@ void SetupLoRa()
 
 boolean receive(char *payload) {
     // clear rxDone
+    //IRQ interrupt request
     writeReg(REG_IRQ_FLAGS, 0x40);
     int irqflags = readReg(REG_IRQ_FLAGS);
 
@@ -394,7 +397,7 @@ boolean receive(char *payload) {
     } else {
 
         byte currentAddr = readReg(REG_FIFO_RX_CURRENT_ADDR);
-        printf("CURRENT ADDR OF SENDER: %i\n");
+        printf("CURRENT ADDR OF SENDER: %i\n", currentAddr);
         byte receivedCount = readReg(REG_RX_NB_BYTES);
         printf("receive COUNT : %i\n", receivedCount)
         receivedbytes = receivedCount;
@@ -608,10 +611,8 @@ void load_config() {
         freq = atoi(conf_frequency);
     if (conf_blocksize != NULL) {
         blocksize = atoi(conf_blocksize);
-        printf("blocksize antes ---> %d \n",atoi(conf_blocksize));
         if (blocksize > (int)sizeof(message))
             blocksize = sizeof(message - 1);
-        printf("blocksize despues ---> %d \n", sizeof(message - 1));
     }
     if (conf_bw != NULL) {
         if (strncasecmp(conf_bw, "BW7_81", strlen("BW7_81")) == 0) {
@@ -750,11 +751,15 @@ int main (int argc, char *argv[]) {
     printf("------------------------------------\n");
     printf("\n\n");
     while(1)  {
+        //standby mode 001, ensures we can fill or empty the FIFO space
         opmode(OPMODE_STANDBY);
+        //To control narrow band response in the two different types of modulation
+        //time to rise/fall -> 50 usec
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
 
         while(poll(fds, 1, 0)) {
+            //section to send messages
             flag = 0;
             memset(&message, 0, sizeof(message));
             buflen = 0;
@@ -786,9 +791,12 @@ int main (int argc, char *argv[]) {
         // radio init
         opmode(OPMODE_STANDBY);
         // reset the IRQ mapping after sending.
+        //setting reg to RxDone
         writeReg(RegDioMapping1, 0);
         writeReg(REG_IRQ_FLAGS, 0x0);
         writeReg(REG_IRQ_FLAGS_MASK, 0);
+        //the radio will track any LoRa signal present in the air and carry on the reception of packets until the companion MCU
+        //sets the radio into another mode of operation
         opmode(OPMODE_RX);
         if (verbose > 1)
             printf("Listening at SF%i on %.6lf Mhz.\n", sf,(double)freq/1000000);
