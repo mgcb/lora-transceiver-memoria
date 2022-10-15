@@ -814,7 +814,7 @@ int main (int argc, char *argv[]) {
                 if (verbose > 1){
                     hexdump((byte *)message, buflen);
                     printf("%s \n", message);
-                    if(strcmp(message[0], 'F') == 0){
+                    if(message[0] == 'F'){
                         flag = 1;
                         continue;
                     }
