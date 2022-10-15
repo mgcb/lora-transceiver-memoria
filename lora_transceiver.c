@@ -759,13 +759,18 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         while(poll(fds, 1, 0)) {
+            if (flag) {
+                system("echo \"G-000.00-00.00\" > /dev/shm/send_fifo");
+            }
+        }
+
+        while(poll(fds, 1, 0)) {
             //section to send messages
             flag = 0;
             memset(&message, 0, sizeof(message));
             buflen = 0;
             while (buflen < blocksize) {
                 retv = read(wfd, (void *)&message[buflen], 1);
-                printf("******* blocksize is %d **********\n", blocksize);
                 if (retv > 0)
                     buflen += retv;
                 else if (EINTR == errno)
@@ -809,7 +814,7 @@ int main (int argc, char *argv[]) {
                 if (verbose > 1){
                     hexdump((byte *)message, buflen);
                     printf("%s \n", message);
-                    if(strcmp(message, "Melanie") == 0){
+                    if(strcmp(message[0], "F") == 0){
                         flag = 1;
                         continue;
                     }
