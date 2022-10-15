@@ -771,7 +771,7 @@ int main (int argc, char *argv[]) {
             flag = 0;
             memset(&message, 0, sizeof(message));
             buflen = 0;
-            while (buflen < blocksize) {
+            while (buflen < blocksize) {    
                 retv = read(wfd, (void *)&message[buflen], 1);
                 if (retv > 0)
                     buflen += retv;
@@ -817,7 +817,7 @@ int main (int argc, char *argv[]) {
                     hexdump((byte *)message, buflen);
                     printf("%c \n", message[0]);
                     if(message[0] == 'F'){
-                        printf("Entro al flag para enviar");
+                        printf("Entro al flag para enviar \n");
                         flag = 1;
                         continue;
                     }
