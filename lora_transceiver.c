@@ -759,6 +759,8 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         while(poll(fds, 1, 0)) {
+            printf("Llego aqui \n");
+            printf("Valor del flag %d ....", flag)
             if (flag) {
                 system("echo \"G-000.00-00.00\" > /dev/shm/send_fifo");
             }
@@ -813,8 +815,9 @@ int main (int argc, char *argv[]) {
                 printf("Received %i bytes.\n", buflen);
                 if (verbose > 1){
                     hexdump((byte *)message, buflen);
-                    printf("%s \n", message);
+                    printf("%c \n", message[0]);
                     if(message[0] == 'F'){
+                        printf("Entro al flag para enviar");
                         flag = 1;
                         continue;
                     }
