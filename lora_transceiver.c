@@ -760,7 +760,7 @@ int main (int argc, char *argv[]) {
 
         while(poll(fds, 1, 0)) {
             printf("Llego aqui \n");
-            printf("Valor del flag %d ....", flag)
+            printf("Valor del flag %d ....", flag);
             if (flag) {
                 system("echo \"G-000.00-00.00\" > /dev/shm/send_fifo");
             }
