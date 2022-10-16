@@ -807,7 +807,7 @@ int main (int argc, char *argv[]) {
                     if(message[0] == 'F'){
                         printf("Entro al flag para enviar \n");
                         flag = 1;
-                        break;
+                        //break;
                     }
                 }
             }
