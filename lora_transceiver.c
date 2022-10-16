@@ -759,14 +759,6 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         while(poll(fds, 1, 0)) {
-            printf("Llego aqui \n");
-            printf("Valor del flag %d ....\n", flag);
-            if (flag) {
-                system("echo \"G-000.00-00.00\" > /dev/shm/send_fifo");
-            }
-        }
-
-        while(poll(fds, 1, 0)) {
             //section to send messages
             flag = 0;
             memset(&message, 0, sizeof(message));
