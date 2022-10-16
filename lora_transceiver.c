@@ -760,7 +760,7 @@ int main (int argc, char *argv[]) {
 
         while(poll(fds, 1, 0)) {
             printf("Llego aqui \n");
-            printf("Valor del flag %d ....", flag);
+            printf("Valor del flag %d ....\n", flag);
             if (flag) {
                 system("echo \"G-000.00-00.00\" > /dev/shm/send_fifo");
             }
@@ -776,6 +776,7 @@ int main (int argc, char *argv[]) {
                 retv = read(wfd, (void *)&message[buflen], 1);
                 if (retv > 0)
                     buflen += retv;
+                    printf( "process of buflen %d \n", buflen);
                 else if (EINTR == errno)
                     continue;
                 else
@@ -820,7 +821,7 @@ int main (int argc, char *argv[]) {
                     if(message[0] == 'F'){
                         printf("Entro al flag para enviar \n");
                         flag = 1;
-                        break;
+                        continue;
                     }
                 }
             }
