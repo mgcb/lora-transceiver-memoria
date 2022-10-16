@@ -772,7 +772,7 @@ int main (int argc, char *argv[]) {
             memset(&message, 0, sizeof(message));
             buflen = 0;
             while (buflen < blocksize) {
-                printf("RETV es ---> %s \n", retv);    
+                printf("RETV es ---> %d \n", retv);    
                 retv = read(wfd, (void *)&message[buflen], 1);
                 if (retv > 0)
                     buflen += retv;
