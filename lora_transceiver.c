@@ -774,9 +774,10 @@ int main (int argc, char *argv[]) {
             while (buflen < blocksize) {
                 printf("RETV es ---> %d \n", retv);    
                 retv = read(wfd, (void *)&message[buflen], 1);
-                if (retv > 0)
+                if (retv > 0) {
                     buflen += retv;
                     printf( "process of buflen %d \n", buflen);
+                }
                 else if (EINTR == errno)
                     continue;
                 else
