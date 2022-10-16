@@ -760,6 +760,7 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         while(poll(fds, 1, 0)) {
+            printf("Entro aqui con flag %d \n", flag);
             //section to send messages
             if (flag) {
                 char aux[] = "G-000.00-00.00";
