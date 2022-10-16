@@ -760,21 +760,10 @@ int main (int argc, char *argv[]) {
 
         while(poll(fds, 1, 0)) {
             //section to send messages
-            flag = 0;
-            memset(&message, 0, sizeof(message));
-            buflen = 0;
-            while (buflen < blocksize) {
-                printf("RETV es ---> %d \n", retv);    
-                retv = read(wfd, (void *)&message[buflen], 1);
-                if (retv > 0) {
-                    buflen += retv;
-                    printf( "process of buflen %d \n", buflen);
-                }
-                else if (EINTR == errno)
-                    continue;
-                else
-                    break;
-            }
+            char aux[] = "G-000.00-00.00";
+            memcpy(message, aux, sizeof(message));
+            write(wfd, message, sizeof(message));
+            buflen = 15;
             printf("The buflen is %d \n", buflen);
             if (buflen > 0) {
                 if (verbose >= 1) {
