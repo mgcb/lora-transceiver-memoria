@@ -1,3 +1,31 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@mgcb 
+mgcb
+/
+lora-transceiver-memoria
+Private
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+Settings
+lora-transceiver-memoria/lora_transceiver.c
+@mgcb
+mgcb quitar write
+Latest commit 59834a0 1 hour ago
+ History
+ 1 contributor
+830 lines (758 sloc)  26.6 KB
+
 /*******************************************************************************
  * This code is a fork of:
  * https://github.com/dragino/rpi-lora-tranceiver/tree/master/dragino_lora_app
@@ -176,6 +204,7 @@ const int SPI_DEVICE = 0;
 
 char message[15];
 bool sx1272 = true;
+int flag = 0;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
 
@@ -764,6 +793,7 @@ int main (int argc, char *argv[]) {
             if (flag) {
                 char aux[] = "G-000.00-00.00";
                 memcpy(message, aux, sizeof(message));
+                //write(wfd, message, sizeof(message));
                 buflen = 15;
                 printf("The buflen is %d \n", buflen);
                 if (buflen > 0) {
@@ -779,8 +809,9 @@ int main (int argc, char *argv[]) {
                     }
                 }
             }
-            flag = 0;
-            continue;
+            else {
+                break;
+            }
         }
 
         // radio init
@@ -825,3 +856,17 @@ int main (int argc, char *argv[]) {
     }
     exit(0);
 }
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
