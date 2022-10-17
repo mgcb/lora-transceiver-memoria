@@ -781,9 +781,8 @@ int main (int argc, char *argv[]) {
                     }
                 }
             }
-            else {
-                break;
-            }
+            flag = 0;
+            break;
         }
 
         // radio init
