@@ -723,7 +723,6 @@ int main (int argc, char *argv[]) {
     int written = -1;
     int buflen = -1;
     int flag = 0;
-    int timeout = 5000;
     //int retv = -1;
     struct pollfd fds[1];
     printf("------------------------------------\n");
@@ -800,7 +799,6 @@ int main (int argc, char *argv[]) {
         if (verbose > 1)
             printf("Listening at SF%i on %.6lf Mhz.\n", sf,(double)freq/1000000);
         do {
-            printf("no estoy escribiendo \n");
             flag = 0;
             memset(message, 0, sizeof(message));
             buflen = receivepacket();
