@@ -764,7 +764,7 @@ int main (int argc, char *argv[]) {
         while(poll(fds, 1, 0) && flag) {
             //section to send messages
             i++;
-            if (i > 20)
+            if (i > 5)
                 flag = 0;
             char aux[] = "G-000.00-00.00";
             memcpy(message, aux, sizeof(message));
