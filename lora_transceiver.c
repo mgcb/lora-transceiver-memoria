@@ -520,9 +520,8 @@ void txlora(byte *frame, byte datalen) {
     // Wait for completion.
     while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0) {
         printf("I enter usleep \n");
-        usleep(10);
+        usleep(20);
     }
-    flag = 0;
     if (lora_debug)
         printf("send: %i bytes in %li microseconds\n", datalen, (get_micro_time() - start));
 }
@@ -762,6 +761,7 @@ int main (int argc, char *argv[]) {
 
         while(poll(fds, 1, 0) && flag) {
             //section to send messages
+            flag = 0;
             char aux[] = "G-000.00-00.00";
             memcpy(message, aux, sizeof(message));
             //write(wfd, message, sizeof(message));
