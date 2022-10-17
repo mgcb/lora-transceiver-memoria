@@ -741,7 +741,7 @@ int main (int argc, char *argv[]) {
 
     memset(fds, 0 , sizeof(fds)); 
     fds[0].fd = wfd;
-    fds[0].events = POLLIN;
+    fds[0].events = POLLOUT;
 
     // SPI bus speed. The lowest speed is sufficient.
     wiringPiSPISetupMode(SPI_DEVICE, 500000, 0);
