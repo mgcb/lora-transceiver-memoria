@@ -723,7 +723,7 @@ int main (int argc, char *argv[]) {
     int written = -1;
     int buflen = -1;
     int flag = 0;
-    int timeout = 1000;
+    int timeout = 5000;
     //int retv = -1;
     struct pollfd fds[1];
     printf("------------------------------------\n");
