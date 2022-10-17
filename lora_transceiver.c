@@ -719,7 +719,7 @@ int full_write(int fd, char *buf, int len) {
 
 int main (int argc, char *argv[]) {
     int rfd = -1;
-    int wfd = -1;
+    //int wfd = -1;
     int written = -1;
     int buflen = -1;
     int flag = 0;
