@@ -780,7 +780,6 @@ int main (int argc, char *argv[]) {
                         delay(10);
                     }
                 }
-                flag = 0;
             }
         }
 
