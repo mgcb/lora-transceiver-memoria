@@ -723,7 +723,6 @@ int main (int argc, char *argv[]) {
     int written = -1;
     int buflen = -1;
     int flag = 0;
-    int timeout = 1000;
     //int retv = -1;
     struct pollfd fds[1];
     printf("------------------------------------\n");
@@ -760,7 +759,7 @@ int main (int argc, char *argv[]) {
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
 
-        while(poll(fds, 1, timeout)) {
+        while(poll(fds, 1, 0)) {
             //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
             if (flag) {
@@ -778,6 +777,7 @@ int main (int argc, char *argv[]) {
                         hexdump((byte *)message, buflen);
                     txlora((byte *)message, buflen);
                     while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
+                        flag = 0;
                         delay(10);
                     }
                 }
@@ -822,7 +822,7 @@ int main (int argc, char *argv[]) {
             } else {
                 usleep(250);
             }
-        } while (! poll(fds, 1, timeout));
+        } while (! poll(fds, 1, 0));
     }
     exit(0);
 }
