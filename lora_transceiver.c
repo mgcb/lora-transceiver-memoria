@@ -176,7 +176,6 @@ const int SPI_DEVICE = 0;
 
 char message[15];
 bool sx1272 = true;
-int flag = 0;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
 
@@ -722,8 +721,8 @@ int main (int argc, char *argv[]) {
     int wfd = -1;
     int written = -1;
     int buflen = -1;
-    int retv = -1;
-    
+    int flag = 0;
+    //int retv = -1;
     struct pollfd fds[1];
     printf("------------------------------------\n");
     load_config();
@@ -760,31 +759,27 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         while(poll(fds, 1, 0)) {
+            //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
-            memset(&message, 0, sizeof(message));
-            buflen = 0;
-            while (buflen < blocksize) {
-                retv = read(wfd, (void *)&message[buflen], 1);
-                if (retv > 0)
-                    buflen += retv;
-                else if (EINTR == errno)
-                    continue;
-                else
-                    break;
-            }
-            if (buflen > 0) {
-                if (verbose >= 1) {
-                    printf("------------------\n");
-                    printf("Sending %i bytes.\n", buflen);
+            if (flag) {
+                char aux[] = "G-000.00-00.00";
+                memcpy(message, aux, sizeof(message));
+                buflen = 15;
+                printf("The buflen is %d \n", buflen);
+                if (buflen > 0) {
+                    if (verbose >= 1) {
+                        printf("------------------\n");
+                        printf("Sending %i bytes.\n", buflen);
+                    }
+                    if (verbose > 1)
+                        hexdump((byte *)message, buflen);
+                    txlora((byte *)message, buflen);
+                    while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
+                        delay(10);
+                    }
                 }
-                if (verbose > 1)
-                    hexdump((byte *)message, buflen);
-                txlora((byte *)message, buflen);
-                while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
-                    delay(10);
-                }
+                flag = 0;
             }
-            flag = 0;
         }
 
         // radio init
@@ -800,6 +795,7 @@ int main (int argc, char *argv[]) {
         if (verbose > 1)
             printf("Listening at SF%i on %.6lf Mhz.\n", sf,(double)freq/1000000);
         do {
+            flag = 0;
             memset(message, 0, sizeof(message));
             buflen = receivepacket();
             if (buflen > 0 && verbose >= 1) {
@@ -811,7 +807,7 @@ int main (int argc, char *argv[]) {
                     if(message[0] == 'F'){
                         printf("Entro al flag para enviar \n");
                         flag = 1;
-                        system("echo \"G-000.00-00.00\" > /dev/shm/send_fifo");
+                        system("echo \"0\" > /dev/shm/send_fifo");
                         break;
                     }
                 }
