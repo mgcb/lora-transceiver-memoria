@@ -723,6 +723,7 @@ int main (int argc, char *argv[]) {
     int written = -1;
     int buflen = -1;
     int flag = 0;
+    int timeout = 1000;
     //int retv = -1;
     struct pollfd fds[1];
     printf("------------------------------------\n");
@@ -759,7 +760,7 @@ int main (int argc, char *argv[]) {
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
 
-        while(poll(fds, 1, 0)) {
+        while(poll(fds, 1, timeout)) {
             printf("Entro aqui con flag %d \n", flag);
             //section to send messages
             if (flag) {
@@ -780,6 +781,9 @@ int main (int argc, char *argv[]) {
                         delay(10);
                     }
                 }
+            }
+            else {
+                continue;
             }
         }
 
