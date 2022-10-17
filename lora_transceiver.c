@@ -520,7 +520,7 @@ void txlora(byte *frame, byte datalen) {
     // Wait for completion.
     while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0) {
         printf("I enter usleep \n");
-        delay(20);
+        usleep(100);
     }
     if (lora_debug)
         printf("send: %i bytes in %li microseconds\n", datalen, (get_micro_time() - start));
