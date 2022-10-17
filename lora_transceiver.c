@@ -723,8 +723,6 @@ int main (int argc, char *argv[]) {
     int wfd = -1;
     int written = -1;
     int buflen = -1;
-    int flag = 0;
-    int i = 0;
     //int retv = -1;
     struct pollfd fds[1];
     printf("------------------------------------\n");
@@ -762,10 +760,7 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         while(poll(fds, 1, 0) && flag) {
-            i++;
-            //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
-            flag = 0;
             char aux[] = "G-000.00-00.00";
             memcpy(message, aux, sizeof(message));
             //write(wfd, message, sizeof(message));
@@ -779,10 +774,8 @@ int main (int argc, char *argv[]) {
                 hexdump((byte *)message, buflen);
             txlora((byte *)message, buflen);
             while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
-                printf("I enter the delay \n");
                 delay(10);
             }
-            delay(10);
         }
 
         // radio init
