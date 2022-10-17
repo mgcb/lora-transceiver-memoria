@@ -760,7 +760,7 @@ int main (int argc, char *argv[]) {
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
 
-        while(poll(fds, 1, timeout)) {
+        while(poll(fds, 1, 0)) {
             //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
             if (flag) {
@@ -813,7 +813,7 @@ int main (int argc, char *argv[]) {
                     if(message[0] == 'F'){
                         printf("Entro al flag para enviar \n");
                         flag = 1;
-                        //break;
+                        break;
                     }
                 }
             }
