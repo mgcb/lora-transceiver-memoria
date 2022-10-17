@@ -760,7 +760,7 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         int poll_result = poll(fds, 1, 0);
-        printf("poll result is %d -----", poll);
+        printf("poll result is %d -----", poll_result);
 
         while(poll(fds, 1, 0)) {
             //printf("Entro aqui con flag %d \n", flag);
