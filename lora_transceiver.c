@@ -176,7 +176,6 @@ const int SPI_DEVICE = 0;
 
 char message[15];
 bool sx1272 = true;
-int flag = 0;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
 
@@ -765,7 +764,6 @@ int main (int argc, char *argv[]) {
             if (flag) {
                 char aux[] = "G-000.00-00.00";
                 memcpy(message, aux, sizeof(message));
-                //write(wfd, message, sizeof(message));
                 buflen = 15;
                 printf("The buflen is %d \n", buflen);
                 if (buflen > 0) {
@@ -781,9 +779,8 @@ int main (int argc, char *argv[]) {
                     }
                 }
             }
-            else {
-                break;
-            }
+            flag = 0;
+            continue;
         }
 
         // radio init
