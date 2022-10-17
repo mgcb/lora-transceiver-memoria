@@ -722,6 +722,7 @@ int main (int argc, char *argv[]) {
     int wfd = -1;
     int written = -1;
     int buflen = -1;
+    int retv = -1;
     int flag = 0;
     //int retv = -1;
     struct pollfd fds[1];
