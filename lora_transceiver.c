@@ -778,6 +778,7 @@ int main (int argc, char *argv[]) {
             if (verbose > 1)
                 hexdump((byte *)message, buflen);
             txlora((byte *)message, buflen);
+            printf("Envio mensaje");
             while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
                 delay(10);
             }
