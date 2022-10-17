@@ -759,6 +759,9 @@ int main (int argc, char *argv[]) {
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
 
+        int poll_result = poll(fds, 1, 0);
+        printf("poll result is %d -----", poll);
+
         while(poll(fds, 1, 0)) {
             //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
@@ -777,7 +780,6 @@ int main (int argc, char *argv[]) {
                         hexdump((byte *)message, buflen);
                     txlora((byte *)message, buflen);
                     while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
-                        flag = 0;
                         delay(10);
                     }
                 }
