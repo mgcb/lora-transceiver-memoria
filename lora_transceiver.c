@@ -737,7 +737,7 @@ int main (int argc, char *argv[]) {
     */
     //O_RDWR modo read and write
     rfd = open_create_fifo(LORARECEIVE_FIFO, O_RDWR | O_NONBLOCK);
-    wfd = open_create_fifo(LORASEND_FIFO, O_RDWR);
+    //wfd = open_create_fifo(LORASEND_FIFO, O_RDWR);
 
     /*memset(fds, 0 , sizeof(fds)); 
     fds[0].fd = wfd;
