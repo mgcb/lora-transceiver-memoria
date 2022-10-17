@@ -762,6 +762,7 @@ int main (int argc, char *argv[]) {
         while(poll(fds, 1, 0) && flag) {
             //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
+            flag = 0;
             char aux[] = "G-000.00-00.00";
             memcpy(message, aux, sizeof(message));
             //write(wfd, message, sizeof(message));
@@ -794,7 +795,6 @@ int main (int argc, char *argv[]) {
         if (verbose > 1)
             printf("Listening at SF%i on %.6lf Mhz.\n", sf,(double)freq/1000000);
         do {
-            flag = 0;
             memset(message, 0, sizeof(message));
             buflen = receivepacket();
             if (buflen > 0 && verbose >= 1) {
