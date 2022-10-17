@@ -759,26 +759,24 @@ int main (int argc, char *argv[]) {
         writeReg(RegPaRamp, (readReg(RegPaRamp) & 0xF0) | 0x08); // set PA ramp-up time 50 uSec
         configPower(power);
 
-        while(poll(fds, 1, 0)) {
+        while(poll(fds, 1, 0) && flag) {
             //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
-            if (flag) {
-                char aux[] = "G-000.00-00.00";
-                memcpy(message, aux, sizeof(message));
-                //write(wfd, message, sizeof(message));
-                buflen = 15;
-                printf("The buflen is %d \n", buflen);
-                if (buflen > 0) {
-                    if (verbose >= 1) {
-                        printf("------------------\n");
-                        printf("Sending %i bytes.\n", buflen);
-                    }
-                    if (verbose > 1)
-                        hexdump((byte *)message, buflen);
-                    txlora((byte *)message, buflen);
-                    while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
-                        delay(10);
-                    }
+            char aux[] = "G-000.00-00.00";
+            memcpy(message, aux, sizeof(message));
+            //write(wfd, message, sizeof(message));
+            buflen = 15;
+            printf("The buflen is %d \n", buflen);
+            if (buflen > 0) {
+                if (verbose >= 1) {
+                    printf("------------------\n");
+                    printf("Sending %i bytes.\n", buflen);
+                }
+                if (verbose > 1)
+                    hexdump((byte *)message, buflen);
+                txlora((byte *)message, buflen);
+                while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
+                    delay(10);
                 }
             }
         }
@@ -821,7 +819,7 @@ int main (int argc, char *argv[]) {
             } else {
                 usleep(250);
             }
-        } while (! poll(fds, 1, 0));
+        } while (! (poll(fds, 1, 0) && flag));
     }
     exit(0);
 }
