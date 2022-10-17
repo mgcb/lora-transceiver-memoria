@@ -765,7 +765,6 @@ int main (int argc, char *argv[]) {
             if (flag) {
                 char aux[] = "G-000.00-00.00";
                 memcpy(message, aux, sizeof(message));
-                //write(wfd, message, sizeof(message));
                 buflen = 15;
                 printf("The buflen is %d \n", buflen);
                 if (buflen > 0) {
@@ -776,6 +775,7 @@ int main (int argc, char *argv[]) {
                     if (verbose > 1)
                         hexdump((byte *)message, buflen);
                     txlora((byte *)message, buflen);
+                    flag = 0;
                     while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
                         delay(10);
                     }
