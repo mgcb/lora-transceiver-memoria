@@ -742,7 +742,7 @@ int main (int argc, char *argv[]) {
 
     memset(fds, 0 , sizeof(fds)); 
     fds[0].fd = wfd;
-    fds[0].events = POLLOUT;
+    fds[0].events = POLLIN;
 
     // SPI bus speed. The lowest speed is sufficient.
     wiringPiSPISetupMode(SPI_DEVICE, 500000, 0);
@@ -813,6 +813,7 @@ int main (int argc, char *argv[]) {
                     if(message[0] == 'F'){
                         printf("Entro al flag para enviar \n");
                         flag = 1;
+                        system("echo \"0\" > /dev/shm/send_fifo");
                         break;
                     }
                 }
