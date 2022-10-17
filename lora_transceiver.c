@@ -765,8 +765,7 @@ int main (int argc, char *argv[]) {
             i++;
             //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
-            if (i > 5)
-                flag = 0;
+            flag = 0;
             char aux[] = "G-000.00-00.00";
             memcpy(message, aux, sizeof(message));
             //write(wfd, message, sizeof(message));
@@ -783,6 +782,7 @@ int main (int argc, char *argv[]) {
                 printf("I enter the delay \n");
                 delay(10);
             }
+            delay(10);
         }
 
         // radio init
