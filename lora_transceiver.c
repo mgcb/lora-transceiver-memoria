@@ -761,7 +761,7 @@ int main (int argc, char *argv[]) {
         configPower(power);
 
         while(poll(fds, 1, timeout)) {
-            printf("Entro aqui con flag %d \n", flag);
+            //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
             if (flag) {
                 char aux[] = "G-000.00-00.00";
@@ -783,7 +783,7 @@ int main (int argc, char *argv[]) {
                 }
             }
             else {
-                continue;
+                break;
             }
         }
 
@@ -800,6 +800,7 @@ int main (int argc, char *argv[]) {
         if (verbose > 1)
             printf("Listening at SF%i on %.6lf Mhz.\n", sf,(double)freq/1000000);
         do {
+            printf("no estoy escribiendo \n");
             flag = 0;
             memset(message, 0, sizeof(message));
             buflen = receivepacket();
