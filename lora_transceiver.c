@@ -739,9 +739,10 @@ int main (int argc, char *argv[]) {
     rfd = open_create_fifo(LORARECEIVE_FIFO, O_RDWR | O_NONBLOCK);
     wfd = open_create_fifo(LORASEND_FIFO, O_RDWR);
 
-    memset(fds, 0 , sizeof(fds)); 
+    /*memset(fds, 0 , sizeof(fds)); 
     fds[0].fd = wfd;
     fds[0].events = POLLIN;
+    */
 
     // SPI bus speed. The lowest speed is sufficient.
     wiringPiSPISetupMode(SPI_DEVICE, 500000, 0);
@@ -762,27 +763,23 @@ int main (int argc, char *argv[]) {
         int poll_result = poll(fds, 1, 0);
         printf("poll result is %d -----", poll_result);
 
-        while(poll(fds, 1, 0)) {
+        while(flag) {
             //printf("Entro aqui con flag %d \n", flag);
             //section to send messages
-            if (flag) {
-                char aux[] = "G-000.00-00.00";
-                memcpy(message, aux, sizeof(message));
-                //write(wfd, message, sizeof(message));
-                buflen = 15;
-                printf("The buflen is %d \n", buflen);
-                if (buflen > 0) {
-                    if (verbose >= 1) {
-                        printf("------------------\n");
-                        printf("Sending %i bytes.\n", buflen);
-                    }
-                    if (verbose > 1)
-                        hexdump((byte *)message, buflen);
-                    txlora((byte *)message, buflen);
-                    while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
-                        delay(10);
-                    }
-                }
+            flag = 0;
+            char aux[] = "G-000.00-00.00";
+            memcpy(message, aux, sizeof(message));
+            //write(wfd, message, sizeof(message));
+            buflen = 15;
+            if (verbose >= 1) {
+                printf("------------------\n");
+                printf("Sending %i bytes.\n", buflen);
+            }
+            if (verbose > 1)
+                hexdump((byte *)message, buflen);
+            txlora((byte *)message, buflen);
+            while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
+                delay(10);
             }
         }
 
@@ -799,7 +796,6 @@ int main (int argc, char *argv[]) {
         if (verbose > 1)
             printf("Listening at SF%i on %.6lf Mhz.\n", sf,(double)freq/1000000);
         do {
-            flag = 0;
             memset(message, 0, sizeof(message));
             buflen = receivepacket();
             if (buflen > 0 && verbose >= 1) {
@@ -811,7 +807,7 @@ int main (int argc, char *argv[]) {
                     if(message[0] == 'F'){
                         printf("Entro al flag para enviar \n");
                         flag = 1;
-                        system("echo \"0\" > /dev/shm/send_fifo");
+                        //system("echo \"0\" > /dev/shm/send_fifo");
                         continue;
                     }
                 }
@@ -824,7 +820,7 @@ int main (int argc, char *argv[]) {
             } else {
                 usleep(250);
             }
-        } while (! poll(fds, 1, 0));
+        } while (!flag);
     }
     exit(0);
 }
