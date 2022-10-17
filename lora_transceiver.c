@@ -522,6 +522,7 @@ void txlora(byte *frame, byte datalen) {
         printf("I enter usleep \n");
         usleep(10);
     }
+    flag = 0;
     if (lora_debug)
         printf("send: %i bytes in %li microseconds\n", datalen, (get_micro_time() - start));
 }
