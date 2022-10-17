@@ -809,6 +809,7 @@ int main (int argc, char *argv[]) {
                         printf("Entro al flag para enviar \n");
                         flag = 1;
                         system("echo \"0\" > /dev/shm/send_fifo");
+                        continue;
                     }
                 }
             }
