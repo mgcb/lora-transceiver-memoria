@@ -765,7 +765,7 @@ int main (int argc, char *argv[]) {
             if (flag) {
                 char aux[] = "G-000.00-00.00";
                 memcpy(message, aux, sizeof(message));
-                write(wfd, message, sizeof(message));
+                //write(wfd, message, sizeof(message));
                 buflen = 15;
                 printf("The buflen is %d \n", buflen);
                 if (buflen > 0) {
