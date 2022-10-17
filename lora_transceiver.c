@@ -519,6 +519,7 @@ void txlora(byte *frame, byte datalen) {
     opmode(OPMODE_TX);
     // Wait for completion.
     while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0) {
+        printf("I enter usleep \n");
         usleep(10);
     }
     if (lora_debug)
@@ -779,6 +780,7 @@ int main (int argc, char *argv[]) {
                 hexdump((byte *)message, buflen);
             txlora((byte *)message, buflen);
             while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
+                printf("I enter the delay \n");
                 delay(10);
             }
         }
