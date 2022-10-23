@@ -166,7 +166,7 @@
 
 #define CONFIG_FILE "/etc/lora/lora.conf"
 
-#define INTERVAL    80000
+#define INTERVAL    50000
 // #############################################
 // #############################################
 //
