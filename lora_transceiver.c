@@ -812,7 +812,7 @@ int main (int argc, char *argv[]) {
                     if(message[0] == 'F'){
                         printf("Entro al flag para enviar \n");
                         flag = 1;
-                        strcpy(command, message);
+                        strcat(command, message);
                         system("echo \"0\" > /dev/shm/send_fifo");
                         printf("The command i'll send is ---> %s \n", command);
                         system(command);
