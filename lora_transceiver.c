@@ -166,7 +166,7 @@
 
 #define CONFIG_FILE "/etc/lora/lora.conf"
 
-#define INTERVAL    1000
+#define INTERVAL    3000
 // #############################################
 // #############################################
 //
@@ -756,6 +756,7 @@ int main (int argc, char *argv[]) {
     printf("------------------------------------\n");
     printf("\n\n");
     while(1)  {
+        t = get_micro_time();
         //standby mode 001, ensures we can fill or empty the FIFO space
         opmode(OPMODE_STANDBY);
         //To control narrow band response in the two different types of modulation
@@ -765,7 +766,6 @@ int main (int argc, char *argv[]) {
 
         while(poll(fds, 1, 0) && flag) {
             //section to send messages
-            t = get_micro_time();
             char aux[] = "G-ACK";
             memcpy(message, aux, sizeof(message));
             //write(wfd, message, sizeof(message));
