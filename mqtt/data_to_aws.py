@@ -30,7 +30,7 @@ if __name__ == '__main__':
     try:
         #obtain message as a parameter
         #message = sys.argv[2:]
-        print(sys.argv)
+        print(sys.argv[1])
         loop()
     except KeyboardInterrupt:
         pass
