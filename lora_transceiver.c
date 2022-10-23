@@ -810,12 +810,16 @@ int main (int argc, char *argv[]) {
                     hexdump((byte *)message, buflen);
                     printf("%c \n", message[0]);
                     if(message[0] == 'F'){
+                        //message received from Fog layer
                         printf("Entro al flag para enviar \n");
                         flag = 1;
                         strcat(command, message);
                         system("echo \"0\" > /dev/shm/send_fifo");
                         printf("The command i'll send is ---> %s \n", command);
                         system(command);
+                        continue;
+                    }else if(message[0] == 'S'){
+                        //discard message received from Sensor layer
                         continue;
                     }
                 }
