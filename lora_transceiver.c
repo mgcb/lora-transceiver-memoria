@@ -520,7 +520,6 @@ void txlora(byte *frame, byte datalen) {
     opmode(OPMODE_TX);
     // Wait for completion.
     while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0) {
-        printf("I enter usleep \n");
         usleep(10);
     }
     if (lora_debug)
@@ -724,7 +723,7 @@ int main (int argc, char *argv[]) {
     int wfd = -1;
     int written = -1;
     int buflen = -1;
-    clock_t t;
+    int t;
     int flag = 0;
     //int retv = -1;
 
@@ -781,6 +780,7 @@ int main (int argc, char *argv[]) {
             while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
                 delay(10);
             }
+            printf("The time is %d \n", (get_micro_time() - t))
             if ((get_micro_time() - t) > INTERVAL){
                 flag = 0;
             }
