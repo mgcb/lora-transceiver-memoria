@@ -14,9 +14,9 @@ myMQTTClient.configureMQTTOperationTimeout(5) # 5 sec
 print ('Iniciando transferencia de datos en Raspberry Pi...')
 myMQTTClient.connect()
 
-def loop(message):
+def loop():
     while True:
-        #message = "Hello from the local gateway"
+        message = "Hello from the local gateway"
         print("Enviando mensaje: ", message)
 
         myMQTTClient.publish(
@@ -29,7 +29,8 @@ def loop(message):
 if __name__ == '__main__':
     try:
         #obtain message as a parameter
-        message = sys.argv[2:]
-        loop(message)
+        #message = sys.argv[2:]
+        print(sys.argv)
+        loop()
     except KeyboardInterrupt:
         pass
