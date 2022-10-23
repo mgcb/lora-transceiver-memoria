@@ -177,6 +177,7 @@ typedef unsigned char byte;
 const int SPI_DEVICE = 0;
 
 char message[15];
+char command[];
 bool sx1272 = true;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
@@ -725,6 +726,7 @@ int main (int argc, char *argv[]) {
     int buflen = -1;
     long int t;
     int flag = 0;
+    command = "python ./mqtt/data_to_aws.py "; 
     //int retv = -1;
 
     struct pollfd fds[1];
@@ -811,7 +813,10 @@ int main (int argc, char *argv[]) {
                     if(message[0] == 'F'){
                         printf("Entro al flag para enviar \n");
                         flag = 1;
+                        strcpy(command, message);
                         system("echo \"0\" > /dev/shm/send_fifo");
+                        printf("The command i'll send is ---> %s \n", command);
+                        system(command);
                         continue;
                     }
                 }
