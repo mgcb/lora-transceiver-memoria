@@ -177,7 +177,6 @@ typedef unsigned char byte;
 const int SPI_DEVICE = 0;
 
 char message[15];
-char command[45] = "python ./mqtt/data_to_aws.py ";;
 bool sx1272 = true;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
@@ -756,6 +755,7 @@ int main (int argc, char *argv[]) {
     printf("------------------------------------\n");
     printf("\n\n");
     while(1)  {
+        char command[45] = "python ./mqtt/data_to_aws.py ";
         t = get_micro_time();
         //standby mode 001, ensures we can fill or empty the FIFO space
         opmode(OPMODE_STANDBY);
