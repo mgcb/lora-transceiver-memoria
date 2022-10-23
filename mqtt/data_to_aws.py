@@ -16,7 +16,7 @@ myMQTTClient.connect()
 
 def loop(message):
     while True:
-        message = "Hello from the local gateway"
+        #message = "Hello from the local gateway"
         print("Enviando mensaje: ", message)
 
         myMQTTClient.publish(
