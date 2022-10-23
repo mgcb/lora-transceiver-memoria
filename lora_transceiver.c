@@ -165,6 +165,8 @@
 #define MAP_DIO2_LORA_NOP      0xC0  // ----11--
 
 #define CONFIG_FILE "/etc/lora/lora.conf"
+
+#define INTERVAL    1000
 // #############################################
 // #############################################
 //
@@ -176,7 +178,6 @@ const int SPI_DEVICE = 0;
 
 char message[15];
 bool sx1272 = true;
-int flag = 0;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
 
@@ -723,7 +724,10 @@ int main (int argc, char *argv[]) {
     int wfd = -1;
     int written = -1;
     int buflen = -1;
+    clock_t t;
+    int flag = 0;
     //int retv = -1;
+
     struct pollfd fds[1];
     printf("------------------------------------\n");
     load_config();
@@ -743,8 +747,6 @@ int main (int argc, char *argv[]) {
     fds[0].fd = wfd;
     fds[0].events = POLLIN;
 
-    int i = 0;
-
     // SPI bus speed. The lowest speed is sufficient.
     wiringPiSPISetupMode(SPI_DEVICE, 500000, 0);
     SetupLoRa();
@@ -763,13 +765,11 @@ int main (int argc, char *argv[]) {
 
         while(poll(fds, 1, 0) && flag) {
             //section to send messages
-            i++;
-            if (i > 5)
-                flag = 0;
-            char aux[] = "G-000.00-00.00";
+            t = get_micro_time();
+            char aux[] = "G-ACK";
             memcpy(message, aux, sizeof(message));
             //write(wfd, message, sizeof(message));
-            buflen = 15;
+            buflen = 5;
             printf("The buflen is %d \n", buflen);
             if (verbose >= 1) {
                 printf("------------------\n");
@@ -780,6 +780,9 @@ int main (int argc, char *argv[]) {
             txlora((byte *)message, buflen);
             while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
                 delay(10);
+            }
+            if ((get_micro_time() - t) > INTERVAL){
+                flag = 0;
             }
         }
 
