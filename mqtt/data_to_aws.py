@@ -1,4 +1,5 @@
 import time
+import sys
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 
 myMQTTClient = AWSIoTMQTTClient("brideMQTT") #random key, if another connection using the same key is opened the previous one is auto closed by AWS IOT
@@ -10,14 +11,13 @@ myMQTTClient.configureOfflinePublishQueueing(-1) # Infinite offline Publish queu
 myMQTTClient.configureDrainingFrequency(2) # Draining: 2 Hz
 myMQTTClient.configureConnectDisconnectTimeout(10) # 10 sec
 myMQTTClient.configureMQTTOperationTimeout(5) # 5 sec
-print ('Initiating Realtime Data Transfer From Raspberry Pi...')
+print ('Iniciando transferencia de datos en Raspberry Pi...')
 myMQTTClient.connect()
 
-def loop():
+def loop(message):
     while True:
-        message = "Hello from the local gateway"
-        print("Sending Message: ", message)
-
+        #message = "Hello from the local gateway"
+        print("Enviando mensaje: ", message)
 
         myMQTTClient.publish(
             topic="RealTimeDataTrasfer/Message",
@@ -28,6 +28,8 @@ def loop():
 
 if __name__ == '__main__':
     try:
-        loop()
+        #obtain message as a parameter
+        message = sys.argv[2:]
+        loop(message)
     except KeyboardInterrupt:
         pass

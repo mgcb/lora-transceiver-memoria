@@ -780,8 +780,8 @@ int main (int argc, char *argv[]) {
             while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
                 delay(10);
             }
-            printf("The time is %ld \n", (get_micro_time() - t));
-            printf("*** interval is %d \n", INTERVAL);
+            //printf("The time is %ld \n", (get_micro_time() - t));
+            //printf("*** interval is %d \n", INTERVAL);
             if ((get_micro_time() - t) > INTERVAL){
                 flag = 0;
             }
