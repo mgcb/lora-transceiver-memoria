@@ -723,7 +723,7 @@ int main (int argc, char *argv[]) {
     int wfd = -1;
     int written = -1;
     int buflen = -1;
-    int t;
+    long int t;
     int flag = 0;
     //int retv = -1;
 
@@ -780,7 +780,8 @@ int main (int argc, char *argv[]) {
             while ((readReg(REG_IRQ_FLAGS) & IRQ_LORA_TXDONE_MASK) == 0){
                 delay(10);
             }
-            printf("The time is %d \n", (get_micro_time() - t))
+            printf("The time is %ld \n", (get_micro_time() - t));
+            printf("*** interval is %d \n", INTERVAL);
             if ((get_micro_time() - t) > INTERVAL){
                 flag = 0;
             }
