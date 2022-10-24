@@ -820,7 +820,7 @@ int main (int argc, char *argv[]) {
                         continue;
                     }else if(message[0] == 'S'){
                         //discard message received from Sensor layer
-                        continue;
+                        break;
                     }
                 }
             }
