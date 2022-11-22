@@ -814,9 +814,9 @@ int main (int argc, char *argv[]) {
                         printf("Entro al flag para enviar \n");
                         flag = 1;
                         strcat(command, message);
-                        system("echo \"0\" > /dev/shm/send_fifo");
-                        printf("The command i'll send is ---> %s \n", command);
                         system(command);
+                        printf("The command i'll send is ---> %s \n", command);
+                        system("echo \"0\" > /dev/shm/send_fifo");
                         continue;
                     }else if(message[0] == 'S'){
                         //discard message received from Sensor layer
