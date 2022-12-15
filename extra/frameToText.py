@@ -1,4 +1,4 @@
-from PIL import Image
+import cv2
 from pytesseract import pytesseract
 
 #Define path to tessaract.exe
