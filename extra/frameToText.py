@@ -9,7 +9,7 @@ path_to_tesseract = r'/usr/bin/tesseract'
 pytesseract.tesseract_cmd = path_to_tesseract
 
 #Define path to image
-folder = r'./Escenas'
+folder = r'./Escenas/'
 f = open("./results.txt", "w")
 
 
