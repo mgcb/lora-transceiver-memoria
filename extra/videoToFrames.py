@@ -1,5 +1,5 @@
 import cv2
-vidcap = cv2.VideoCapture('test_video.mp4')
+vidcap = cv2.VideoCapture('video.mp4')
 success,image = vidcap.read()
 count = 0
 while success:
