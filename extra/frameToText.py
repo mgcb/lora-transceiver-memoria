@@ -8,7 +8,7 @@ path_to_tesseract = r'/usr/bin/tesseract'
 pytesseract.tesseract_cmd = path_to_tesseract
 
 #Define path to image
-img_cv = cv2.imread(r'./frame25.jpg')
+img_cv = cv2.imread(r'./frame0.jpg')
 
 #Extract text from image
 img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
