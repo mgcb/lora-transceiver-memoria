@@ -13,7 +13,7 @@ folder = r'./'
 
 for root, dirs, file_names in os.walk(folder):
     for file_name in file_names:
-        cv2.imread(folder + file_name)
+        img_cv = cv2.imread(folder + file_name)
 
         img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
         print(pytesseract.image_to_string(img_rgb))
