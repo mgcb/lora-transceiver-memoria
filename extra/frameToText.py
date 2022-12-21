@@ -20,6 +20,6 @@ for root, dirs, file_names in os.walk(folder):
 
         img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
         f.write(pytesseract.image_to_string(img_rgb))
-        print("Writing file number " + i)
+        print("Writing file number " + str(i))
         i+=1
 
