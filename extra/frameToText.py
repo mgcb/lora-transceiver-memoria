@@ -10,12 +10,12 @@ pytesseract.tesseract_cmd = path_to_tesseract
 
 #Define path to image
 folder = r'./'
-f = open("./results", "w")
+f = open("./results.txt", "w")
 
 
 for root, dirs, file_names in os.walk(folder):
+    i = 0
     for file_name in file_names:
-        i = 0
         img_cv = cv2.imread(folder + file_name)
 
         img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
