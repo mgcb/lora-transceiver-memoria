@@ -1,5 +1,6 @@
 import cv2
 from pytesseract import pytesseract
+import os
 
 #Define path to tessaract.exe
 path_to_tesseract = r'/usr/bin/tesseract'
