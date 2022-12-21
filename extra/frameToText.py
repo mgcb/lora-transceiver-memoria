@@ -9,17 +9,16 @@ path_to_tesseract = r'/usr/bin/tesseract'
 pytesseract.tesseract_cmd = path_to_tesseract
 
 #Define path to image
-folder = r'./'
+folder = r'./Escenas'
 f = open("./results.txt", "w")
 
 
 for root, dirs, file_names in os.walk(folder):
     i = 0
     for file_name in file_names:
-        img_cv = cv2.imread(folder + file_name)
+        img_cv = Image.open(folder + file_name)
 
-        img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
-        f.write(pytesseract.image_to_string(img_rgb))
+        f.write(pytesseract.image_to_string(img_cv))
         print("Writing file number " + str(i))
         i+=1
 
