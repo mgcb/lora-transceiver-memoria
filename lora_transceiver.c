@@ -809,7 +809,7 @@ int main (int argc, char *argv[]) {
                 if (verbose > 1){
                     hexdump((byte *)message, buflen);
                     printf("%c \n", message[0]);
-                    if(message[0] == 'S'){
+                    if(message[0] == 'F'){
                         //message received from Fog layer
                         printf("Entro al flag para enviar \n");
                         flag = 1;
@@ -818,7 +818,7 @@ int main (int argc, char *argv[]) {
                         printf("The command i'll send is ---> %s \n", command);
                         system("echo \"0\" > /dev/shm/send_fifo");
                         continue;
-                    }else if(message[0] == 'F'){
+                    }else if(message[0] == 'S'){
                         //discard message received from Sensor layer
                         continue;
                     }
