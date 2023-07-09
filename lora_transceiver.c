@@ -176,7 +176,7 @@ typedef unsigned char byte;
 // The SPI device this board is using.
 const int SPI_DEVICE = 0;
 
-char message[17];
+char message[14];
 bool sx1272 = true;
 byte receivedbytes;
 enum sf_t { SF7=7, SF8, SF9, SF10, SF11, SF12 };
